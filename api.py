@@ -24,12 +24,12 @@ class ProvisionRequest(BaseModel):
 @app.post("/provision/create")
 def create_user(req: ProvisionRequest):
     server = Server("ldap://localhost:389", get_info=ALL)
-    ldap_conn = Connection(server, "cn=admin,dc=entreprise,dc=com", "admin", auto_bind=True)
+    ldap_conn = Connection(server, "cn=admin,dc=SAE,dc=com", "admin", auto_bind=True)
     
     firstname = req.attributes["firstname"]
     lastname = req.attributes["lastname"]
     login = f"{firstname.lower()}.{lastname.lower()}"
-    dn = f"uid={login},dc=entreprise,dc=com"
+    dn = f"uid={login},ou=users,dc=SAE,dc=com"
     
     # Ajoute l'utilisateur
     result = ldap_conn.add(dn, ['inetOrgPerson'], {
@@ -64,13 +64,13 @@ def update_user(req: ProvisionRequest):
     try:
         # Connexion LDAP
         server = Server("ldap://localhost:389", get_info=ALL)
-        ldap_conn = Connection(server, "cn=admin,dc=entreprise,dc=com", "admin", auto_bind=True)
+        ldap_conn = Connection(server, "cn=admin,dc=SAE,dc=com", "admin", auto_bind=True)
         
         firstname = req.attributes.get("firstname")
         lastname = req.attributes.get("lastname")
         email = req.attributes.get("email")
         login = req.accountId
-        dn = f"uid={login},dc=entreprise,dc=com"
+        dn = f"uid={login},ou=users,dc=SAE,dc=com"
         
         # Modifier les attributs
         changes = {}
@@ -109,10 +109,10 @@ def delete_user(req: ProvisionRequest):
     try:
         # Connexion LDAP
         server = Server("ldap://localhost:389", get_info=ALL)
-        ldap_conn = Connection(server, "cn=admin,dc=entreprise,dc=com", "admin", auto_bind=True)
+        ldap_conn = Connection(server, "cn=admin,dc=SAE,dc=com", "admin", auto_bind=True)
         
         login = req.accountId
-        dn = f"uid={login},dc=entreprise,dc=com"
+        dn = f"uid={login},ou=users,dc=SAE,dc=com"
         
         # Supprimer l'utilisateur
         ldap_conn.delete(dn)
