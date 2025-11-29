@@ -1,0 +1,19 @@
+ldap:
+  mappings:
+    login: "{{ firstname|lower }}.{{ lastname|lower }}"
+    cn: "{{ firstname }} {{ lastname }}"
+    mail: "{{ login }}@sae.com"
+    dn: "uid={{ login }},dc=SAE,dc=com"  # ← dc=SAE au lieu de dc=entreprise
+  
+  object_classes:
+    - inetOrgPerson
+  
+  server:
+    host: "localhost"
+    port: 389
+    admin_dn: "cn=admin,dc=SAE,dc=com"  # ← dc=SAE
+    admin_password: "admin"
+
+global:
+  domain: "sae.com"
+  base_dn: "dc=SAE,dc=com"  # ← dc=SAE
