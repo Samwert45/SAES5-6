@@ -28,9 +28,6 @@ class ProvisionRequest(BaseModel):
 
 @app.post("/provision/create")
 def create_user(req: ProvisionRequest):
-<<<<<<< HEAD
-    """Création avec règles dynamiques"""
-=======
     server = Server("ldap://localhost:389", get_info=ALL)
     ldap_conn = Connection(server, "cn=admin,dc=SAE,dc=com", "admin", auto_bind=True)
     
@@ -53,7 +50,6 @@ def create_user(req: ProvisionRequest):
     ldap_conn.unbind()
     
     # Log dans PostgreSQL
->>>>>>> b1f2bd4cec25f37fe5208ebb613ad17cc97b3869
     try:
         # 1. Appliquer les règles de calcul
         calculated = rules_engine.apply_rules("ldap", req.attributes)
@@ -111,13 +107,6 @@ def create_user(req: ProvisionRequest):
 def update_user(req: ProvisionRequest):
     """Modifier un utilisateur dans LDAP avec règles dynamiques"""
     try:
-<<<<<<< HEAD
-        # 1. Appliquer les règles de calcul
-        calculated = rules_engine.apply_rules("ldap", req.attributes)
-        
-        # 2. Récupérer la config LDAP
-        ldap_config = rules_engine.get_server_config("ldap")
-=======
         # Connexion LDAP
         server = Server("ldap://localhost:389", get_info=ALL)
         ldap_conn = Connection(server, "cn=admin,dc=SAE,dc=com", "admin", auto_bind=True)
@@ -127,7 +116,6 @@ def update_user(req: ProvisionRequest):
         email = req.attributes.get("email")
         login = req.accountId
         dn = f"uid={login},ou=users,dc=SAE,dc=com"
->>>>>>> b1f2bd4cec25f37fe5208ebb613ad17cc97b3869
         
         # 3. Connexion LDAP
         server = Server(f"ldap://{ldap_config['host']}:{ldap_config['port']}", get_info=ALL)
@@ -182,20 +170,12 @@ def update_user(req: ProvisionRequest):
 def delete_user(req: ProvisionRequest):
     """Supprimer un utilisateur dans LDAP avec règles dynamiques"""
     try:
-<<<<<<< HEAD
-        # 1. Appliquer les règles pour obtenir le DN
-        calculated = rules_engine.apply_rules("ldap", req.attributes)
-        
-        # 2. Récupérer la config LDAP
-        ldap_config = rules_engine.get_server_config("ldap")
-=======
         # Connexion LDAP
         server = Server("ldap://localhost:389", get_info=ALL)
         ldap_conn = Connection(server, "cn=admin,dc=SAE,dc=com", "admin", auto_bind=True)
         
         login = req.accountId
         dn = f"uid={login},ou=users,dc=SAE,dc=com"
->>>>>>> b1f2bd4cec25f37fe5208ebb613ad17cc97b3869
         
         # 3. Connexion LDAP
         server = Server(f"ldap://{ldap_config['host']}:{ldap_config['port']}", get_info=ALL)
