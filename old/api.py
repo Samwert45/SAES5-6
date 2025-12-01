@@ -25,12 +25,10 @@ class ProvisionRequest(BaseModel):
     accountId: str
     attributes: dict
 
-
 @app.post("/provision/create")
 def create_user(req: ProvisionRequest):
     server = Server("ldap://localhost:389", get_info=ALL)
     ldap_conn = Connection(server, "cn=admin,dc=SAE,dc=com", "admin", auto_bind=True)
-    
     firstname = req.attributes["firstname"]
     lastname = req.attributes["lastname"]
     login = f"{firstname.lower()}.{lastname.lower()}"

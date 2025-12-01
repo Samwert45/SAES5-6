@@ -16,8 +16,8 @@ def test_basic_rules():
     # Vérifications
     assert result['login'] == "jean.dupont"
     assert result['cn'] == "Jean Dupont"
-    assert result['mail'] == "jean.dupont@entreprise.com"
-    assert result['dn'] == "uid=jean.dupont,dc=entreprise,dc=com"
+    assert result['mail'] == "jean.dupont@sae.com"
+    assert result['dn'] == "uid=jean.dupont,dc=SAE,dc=com"
     
     print("✅ Tests réussis!")
     print(f"Résultat: {result}")
